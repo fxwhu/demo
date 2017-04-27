@@ -1,0 +1,19 @@
+
+.idea/*
+*.iml
+*.class
+*.zip
+*.log
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*/*/target
+*/*/.settings
+*/*/.classpath
+*/*/.project
+
+/*/*.versionsBackup
+/*/*/*.versionsBackup

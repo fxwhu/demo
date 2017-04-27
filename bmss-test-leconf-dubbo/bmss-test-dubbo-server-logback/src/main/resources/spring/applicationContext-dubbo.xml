@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://code.alibabatech.com/schema/dubbo 
+    	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    	
+    	
+    <dubbo:application name="testLogger"/>
+    <!-- <dubbo:monitor protocol="registry"/> -->	
+    <dubbo:protocol name="dubbo" port="20881" />
+      
+    <dubbo:registry protocol="zookeeper" address="zookeeper://10.120.21.104:2181" group="test"/>
+	
+	<dubbo:service interface="com.bmss.test.api.LoggerTestApi" ref="loggerTest1"/>
+	 
+</beans>

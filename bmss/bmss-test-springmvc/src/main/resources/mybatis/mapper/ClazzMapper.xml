@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bmss.test.springmvc.db.map.ClazzMapper" >
+  <resultMap id="BaseResultMap" type="com.bmss.test.springmvc.db.entity.Clazz" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="glass_id" property="glassId" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, school_id, glass_id, type
+  </sql>
+  
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectClassVoById" resultType="com.bmss.test.springmvc.commons.ClazzVo"  >
+    select 
+          c.id as classId,
+          CONCAT(g.description,c.class_id,'班')as classInfo,
+           if(isnull(cp.class_id)=1,0,1)as isSelected
+          from class c 
+          INNER JOIN glass g on(c.glass_id=g.id)
+          INNER JOIN teacher_class tc on(tc.class_id=c.id)
+          LEFT  JOIN (select p.class_id from class_paper p where p.paper_id=#{paperId,jdbcType=BIGINT})  cp on(c.id=cp.class_id) 
+          where tc.teacher_no=#{teacherNo,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.bmss.test.springmvc.db.entity.Clazz" >
+    insert into class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="glassId != null" >
+        glass_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="glassId != null" >
+        #{glassId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bmss.test.springmvc.db.entity.Clazz" >
+    update class
+    <set >
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="glassId != null" >
+        glass_id = #{glassId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPaperId" resultType="com.bmss.test.springmvc.commons.ClazzVo">
+    SELECT T3.id as classId,
+    CONCAT(g.description,T3.class_id,'班') as classInfo FROM(
+    SELECT T1.id, T1.glass_id, T1.class_id, T2.paper_id FROM
+    class AS T1 INNER JOIN class_paper AS T2 ON (T1.id = T2.class_id)) AS T3
+    LEFT JOIN glass g on(T3.glass_id=g.id)
+    WHERE
+    T3.paper_id = #{paperid}
+    <if test="classid != null">
+      AND T3.id = #{classid}
+    </if>
+  </select>
+
+  <select id="getPaperIdByClassId" resultType="java.lang.Long">
+    SELECT class_paper.paper_id FROM class_paper WHERE
+    class_paper.class_id = #{classid}
+  </select>
+
+  <select id="selectByTechNo" resultType="com.bmss.test.springmvc.commons.ClazzVo">
+    SELECT T3.id as classId,
+    CONCAT(g.description,T3.class_id,'班') as classInfo FROM
+    (SELECT T1.id, T1.glass_id, T1.class_id FROM class AS T1 INNER JOIN teacher_class AS T2 ON (T1.id = T2 .class_id)
+    <where>
+      <if test="teacheno != null and teacheno!=''">
+        T2.teacher_no=#{teacheno,jdbcType=INTEGER}
+      </if>
+    </where>) AS T3
+    LEFT JOIN glass g on(T3.glass_id=g.id)
+  </select>
+
+
+
+
+</mapper>

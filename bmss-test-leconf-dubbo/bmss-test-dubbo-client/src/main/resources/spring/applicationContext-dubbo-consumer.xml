@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://code.alibabatech.com/schema/dubbo 
+    	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<dubbo:application name="testLogger" />
+
+	<dubbo:registry id="test" protocol="zookeeper" address="zookeeper://10.120.21.104:2181" group="test"/>
+
+    <dubbo:consumer check="false"/>
+    <!-- <dubbo:monitor protocol="registry"/> -->
+    <!-- 订单评论 -->
+    <dubbo:reference  id="loggerTest"  interface="com.bmss.test.api.LoggerTestApi"
+    timeout="10000" check="false" retries="3"/>
+
+    <!--<dubbo:reference  id="loggerTest1"  interface="com.bmss.test.api.LoggerTestApi"
+    timeout="10000" check="false" retries="3" group="demo1"/>-->
+
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+ 	xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:task="http://www.springframework.org/schema/task"
+ 	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/cache
+	http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+
+
+	<task:annotation-driven executor="asyncExecutor" />
+	<task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />
+
+	<!--<aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>-->
+
+    <context:component-scan base-package="com.bmss.async"/>
+	<!--<task:annotation-driven/>-->
+
+    <!--<import resource="classpath:/spring/applicationContext-propertiesResource.xml"/>
+    <import resource="classpath:spring/applicationContext-dubbo.xml"/>-->
+
+
+</beans>

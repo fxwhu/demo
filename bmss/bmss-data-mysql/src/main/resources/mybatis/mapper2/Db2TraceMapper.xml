@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bmss.xa.mapper2.Db2TraceMapper">
+
+    <update id="decreaseMoney">
+        UPDATE account SET money = money - #{money,jdbcType=BIGINT} WHERE
+        userId = #{userId,jdbcType=VARCHAR} AND money &gt;= #{money,jdbcType=BIGINT}
+    </update>
+
+    <update id="increaseMoney">
+        UPDATE account SET money = money + #{money,jdbcType=BIGINT} WHERE
+        userId = #{userId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getAcountById" resultType="com.bmss.xa.Account">
+        SELECT * FROM account WHERE userId = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO account(userId, money) VALUES (#{userId,jdbcType=VARCHAR}, #{money,jdbcType=BIGINT})
+    </insert>
+
+</mapper>

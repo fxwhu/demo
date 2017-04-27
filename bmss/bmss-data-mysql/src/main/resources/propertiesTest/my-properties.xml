@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <bean id="propertyConfigurer"
+          class="com.bmss.properties.MyProperties">
+        <property name="locations">
+            <list>
+                <value>classpath*:/propertiesTest/account.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="account" class="com.bmss.xa.Account">
+        <property name="money" value="${account.money}" />
+        <property name="userId" value="${account.userId}" />
+        <property name="people">
+                <bean class="com.bmss.xa.People">
+                    <property name="name" value="${account.people.name}"/>
+                    <property name="age" value="${account.people.age}"/>
+                    <property name="phoneNum">
+                        <list>
+                            <value>${account.people.phoneNum1}</value>
+                            <value>${account.people.phoneNum2}</value>
+                            <value>${account.people.phoneNum3}</value>
+                        </list>
+                    </property>
+                </bean>
+        </property>
+    </bean>
+
+</beans>

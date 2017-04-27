@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bmss.test.spring.dao.SpitterMapper">
+    <resultMap id="spitterMapReturn" type="com.bmss.test.spring.entity.Spitter">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="name" jdbcType="CHAR"/>
+        <result column="password" property="password" jdbcType="CHAR"/>
+        <result column="fullname" property="fullname" jdbcType="CHAR"/>
+        <result column="email" property="email" jdbcType="CHAR"/>
+        <result column="update_by_email" property="updateByEmail" jdbcType="FLOAT"/>
+    </resultMap>
+    <select id="getByName" resultMap="spitterMapReturn">
+        SELECT * FROM spitter WHERE spitter.username = #{name}
+    </select>
+    
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO spitter(username, password, fullname, email, update_by_email) VALUES
+        <foreach collection="spitters" item="item" index="index" separator=",">
+            (#{item.name},#{item.password},#{item.fullname},#{item.email},#{item.updateByEmail})
+        </foreach>
+    </insert>
+
+    <select id="getAll" resultMap="spitterMapReturn">
+        SELECT * FROM spitter
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reference Manual http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="log.base" value="/data/logs/tomcat" />
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <!-- 日志文件输出 -->  
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <File>${log.base}/edu.log</File><!-- 设置日志不超过${log.max.size}时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->  
+        <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <FileNamePattern>${log.base}/archive/edu.log_all_%d{yyyy-MM-dd}.%i.log.zip  
+            </FileNamePattern>  
+             <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                          <maxFileSize>10kb</maxFileSize>  
+            </timeBasedFileNamingAndTriggeringPolicy>  
+        </rollingPolicy>  
+        <!-- 日志输出的文件的格式  -->  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]%logger{56}.%method:%L -%msg%n</pattern>  
+             <charset>UTF-8</charset>
+        </layout>  
+    </appender>  
+    
+    <!-- 异步输出 -->  
+    <appender name ="async" class= "ch.qos.logback.classic.AsyncAppender">  
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->  
+            <discardingThreshold >0</discardingThreshold>  
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->  
+            <queueSize>512</queueSize>  
+            <!-- 添加附加的appender,最多只能添加一个 -->  
+         <appender-ref ref ="file"/>  
+    </appender>  
+   
+    <logger name="org.springframework" level="WARN" additivity="false"/>
+    <logger name="org.apache.commons.beanutils" level="WARN" additivity="false"/>
+    <logger name="org.apache.http" level="WARN" additivity="false"/>
+    
+    <!-- 为某个包下的所有类的指定Appender 这里也可以指定类名称例如：com.lenovo.edu -->  
+    <logger name="com" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="stdout" />  
+        <appender-ref ref="async" />  
+    </logger> 
+    
+    <logger name="dao" level="INFO">  
+	    <!--daoFILE为实际定义的appender-->  
+	    <appender-ref ref="daoFILE" />  
+	</logger>
+     
+    <!-- root将级别为“DEBUG”及大于“DEBUG”的日志信息交给已经配置好的名为“Console”的appender处理，“Console”appender将信息打印到Console -->  
+    <root level="INFO">
+        <appender-ref ref="stdout" /> <!-- 标识这个appender将会添加到这个logger -->  
+        <appender-ref ref="async" />  
+    </root>  
+    
+    
+</configuration>
