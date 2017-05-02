@@ -129,45 +129,4 @@
     <!-- 开启注解事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	
-	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	     &lt;!&ndash;dataSource属性指定要用到的连接池&ndash;&gt;
-	     <property name="dataSource" ref="dataSource"/> 
-	     &lt;!&ndash;configLocation属性指定mybatis的核心配置文件&ndash;&gt;
-	     <property name="configLocation" value="classpath:mybatis/configuration.xml" /> 
-	     <property name="mapperLocations">
-			<list>
-				<value>classpath:mybatis/mapper/*Mapper.xml</value>
-			</list>
-		</property>
-     </bean> 
-     
-     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-       <property name="basePackage" value="com.lenovo.points.db.mapper" />
-       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />   
-     </bean>
-	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-      <property name="dataSource" ref="dataSource" />
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager" />-->
-    
-    
-	<!-- 配置druid监控spring jdbc 
-	<bean id="druid-stat-interceptor"
-		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
-	</bean>
-	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
-		scope="prototype">
-		<property name="patterns">
-			<list>
-				<value>com.lenovo.edu..dao</value>
-			</list>
-		</property>
-	</bean>
-
-	<aop:config>
-		<aop:advisor advice-ref="druid-stat-interceptor"
-			pointcut-ref="druid-stat-pointcut" />
-	</aop:config>
--->
 </beans>

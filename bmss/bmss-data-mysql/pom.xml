@@ -52,10 +52,43 @@
         </dependency>
 
 
+        <!--redis配置-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.9.4.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.8.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.8.2</version>
         </dependency>
 
 
@@ -107,43 +140,6 @@
         </dependency>
 
         <!--分布式事务-->
-        <!--<dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jta</artifactId>
-            <version>3.9.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jdbc</artifactId>
-            <version>3.9.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions-api</artifactId>
-            <version>3.9.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions</artifactId>
-            <version>3.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>atomikos-util</artifactId>
-            <version>3.9.3</version>
-        </dependency>-->
-
-
         <!--<dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>javax.transaction-api</artifactId>

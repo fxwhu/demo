@@ -11,6 +11,16 @@ public class Student {
 
     private String no;
 
+    public Student() {
+    }
+
+    public Student(String name, String sex, Integer age, String no) {
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+        this.no = no;
+    }
+
     public Long getId() {
         return id;
     }

@@ -78,6 +78,13 @@ public class WatchTest {
     }
 
 
+    @Test
+    public void getExpire(){
+        Long expire = redisTemplate.getExpire("mybatis_cache:");
+        System.out.println(expire);
+    }
+
+
 
 
 

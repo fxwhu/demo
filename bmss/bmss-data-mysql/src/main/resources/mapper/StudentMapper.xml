@@ -8,25 +8,35 @@
     <result column="age" property="age" jdbcType="INTEGER" />
     <result column="no" property="no" jdbcType="VARCHAR" />
   </resultMap>
+
+  <cache type="com.bmss.db.redis.RedisCache"/>
+
   <sql id="Base_Column_List" >
     id, name, sex, age, no
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from student
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from student
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+
   <insert id="insert" parameterType="com.bmss.db.pojo.Student" >
-    insert into student (id, name, sex, 
+    insert into student (name, sex,
       age, no)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
       #{age,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.bmss.db.pojo.Student" >
     insert into student
     <trim prefix="(" suffix=")" suffixOverrides="," >

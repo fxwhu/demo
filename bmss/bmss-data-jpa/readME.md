@@ -1,0 +1,1 @@
+本测试针对的是spring-data-rest，即使用restful风格的接口实现对数据库的操作
