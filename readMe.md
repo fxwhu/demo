@@ -1,9 +1,9 @@
-1.spring动态代理，本类中调用的方式:
+**1.spring动态代理，本类中调用的方式:**
 extend ApplicationObjectSupport 使用getApplicationContext().getBean(TestAsync.class).test3();
 详见TestAsync
 
 
-2.关于spring事务中select...for update失效问题 时间设置稍长一点
+**2.关于spring事务中select...for update失效问题 时间设置稍长一点**
 mysql> show variables like 'innodb_lock_wait_timeout';
 +--------------------------+-------+
 | Variable_name            | Value |
@@ -13,7 +13,7 @@ mysql> show variables like 'innodb_lock_wait_timeout';
 1 row in set
 详见:data-mysql db
 
-3.关于for update锁表还是锁行的问题
+**3.关于for update锁表还是锁行的问题**
 举个例子: 
 假设有个表单products ，里面有id 跟name 二个栏位，id 是主键。 
 例1: (明确指定主键(有包含)，并且有此数据，row lock) 
@@ -26,7 +26,7 @@ SELECT * FROM products WHERE value='Mouse' FOR UPDATE;
 SELECT * FROM products WHERE id<>'3' FOR UPDATE;
 
 
-4.关于mybatis
+**4.关于mybatis**
 bind元素------模糊查询
 <bind value="bind_param1" value="%" + param1 + "%"/>
 test元素 foreach元素 set
