@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.bmss.db.pojo.Student" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR"/>
     <result column="age" property="age" jdbcType="INTEGER" />
     <result column="no" property="no" jdbcType="VARCHAR" />
   </resultMap>
 
-  <cache type="com.bmss.db.redis.RedisCache"/>
+  <!--<cache type="com.bmss.db.redis.RedisCache"/>-->
 
   <sql id="Base_Column_List" >
     id, name, sex, age, no
@@ -22,6 +22,20 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
+  <select id="selectByNameAndNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    <where>
+      <if test="name !=null">
+        AND name = #{name}
+      </if>
+      <if test="no != null">
+        AND no = #{no}
+      </if>
+    </where> FOR UPDATE
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from student
@@ -29,10 +43,11 @@
   </delete>
 
 
+  <!--typeHandler=org.apache.ibatis.type.EnumTypeHandler-->
   <insert id="insert" parameterType="com.bmss.db.pojo.Student" >
     insert into student (name, sex,
       age, no)
-    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+    values (#{name,jdbcType=VARCHAR}, #{sex, typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       #{age,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR})
   </insert>
 
@@ -74,6 +89,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.bmss.db.pojo.Student" >
     update student
     <set >
@@ -92,12 +109,19 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bmss.db.pojo.Student" >
+
+  <update id="update" parameterType="com.bmss.db.pojo.Student" >
     update student
     set name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
       no = #{no,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      WHERE id = #{id}
   </update>
+  
+  
+  <insert id="insertAndUpdate" parameterType="com.bmss.db.pojo.Student">
+    INSERT INTO student (id, name, sex, age, no) VALUES(#{id}, #{name}, #{sex}, #{age}, #{no}) ON
+    DUPLICATE KEY UPDATE age = age + 1;
+  </insert>
 </mapper>

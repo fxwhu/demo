@@ -1,6 +1,7 @@
 package com.bmss.db.mapper;
 
 import com.alibaba.fastjson.JSON;
+import com.bmss.db.pojo.Sex;
 import com.bmss.db.pojo.Student;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,10 +30,10 @@ public class StudentMapperTest {
 
     @Test
     public void insert() throws Exception {
-        Student student = new Student("ming", "male", 10, "00001");
+        Student student = new Student("ming", Sex.male, 10, "00001");
         studentMapper.insert(student);
-        Student student1 = new Student("hong", "female", 9, "00002");
-        studentMapper.insert(student1);
+//        Student student1 = new Student("hong", Sex.FAMALE, 9, "00002");
+//        studentMapper.insert(student1);
     }
 
     @Test
@@ -42,10 +43,12 @@ public class StudentMapperTest {
 
     @Test
     public void selectByPrimaryKey() throws Exception {
-        Student student = studentMapper.selectByPrimaryKey(17L);
+        Student student = studentMapper.selectByPrimaryKey(28L);
+        Sex sex = student.getSex();
+        System.out.println(sex.getId());
         System.out.println(JSON.toJSONString(student));
-        Student student1 = studentMapper.selectByPrimaryKey(17L);
-        System.out.println(JSON.toJSONString(student1));
+//        Student student1 = studentMapper.selectByPrimaryKey(17L);
+//        System.out.println(JSON.toJSONString(student1));
 
     }
 

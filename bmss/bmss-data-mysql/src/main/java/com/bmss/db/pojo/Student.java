@@ -5,7 +5,7 @@ public class Student {
 
     private String name;
 
-    private String sex;
+    private Sex sex;
 
     private Integer age;
 
@@ -14,7 +14,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, String sex, Integer age, String no) {
+    public Student(String name, Sex sex, Integer age, String no) {
         this.name = name;
         this.sex = sex;
         this.age = age;
@@ -37,13 +37,6 @@ public class Student {
         this.name = name;
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 
     public Integer getAge() {
         return age;
@@ -59,5 +52,13 @@ public class Student {
 
     public void setNo(String no) {
         this.no = no;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 }
